@@ -1,85 +1,14 @@
 import Vuex from 'vuex'
+import camelCase from 'lodash/camelCase'
 
-const createStore = () => {
-    return new Vuex.Store({
-        state: {
-            token   : localStorage.getItem('token'),
-            auth    : null
-        },
-        actions: {
-            fetchAuth(context, payload)
-            {
-                this.$axios.get('/user/profile').then((result) => {
-                    if(result.data.status)
-                    {
-                        context.commit('setAuth', result.data.data.profile);
-                    }
-                }).catch((error) => {
-                    console.log(error);
-                });
-            },
-            login(context, payload)
-            {
-                return new Promise((resolve, reject) => {
-                    this.$axios.post('/login', payload).then((result) => {
-                        if(result.data.status)
-                        {
-                            context.commit('setToken', result.data.data.jwt.token);
-                            context.commit('setAuth', result.data.data.user);
+const requireModule = require.context('./modules', false, /\.js$/);
+const modules = {};
 
-                            resolve(result.data);
-                        }
-                        else
-                        {
-                            reject(result.data);
-                        }
-                    }).catch((error) => {
-                        reject(error);
-                    });
-                });
-            },
-            logout(context, payload)
-            {
-                return new Promise((resolve, reject) => {
-                    context.commit('removeToken');
-                    resolve(true);
-                });
-            },
-            fetchUserBirthday(context, payload)
-            {
-                return new Promise((resolve, reject) => {
-                    this.$axios.get('/user/birthday').then((result) => {
-                        if(result.data.status)
-                        {
-                            resolve(result.data);
-                        }
-                        else
-                        {
-                            reject(result.data);
-                        }
-                    }).catch((error) => {
-                        reject(result.data);
-                    });
-                });
-            }
-        },
-        mutations: {
-            setToken(state, payload)
-            {
-                localStorage.setItem('token', payload);
-              	state.token = payload;
-            },
-            setAuth(state, payload){
-                state.auth = payload;
-            },
-            removeToken(state, payload)
-            {
-                localStorage.removeItem('token');
-              	state.token = null;
-                state.auth  = null;
-            }
-        }
-    })
+requireModule.keys().forEach(fileName => {
+	const moduleName       = camelCase(fileName.replace(/(\.\/|\.js)/g, ''));
+	modules[moduleName]    = requireModule(fileName).default;
+});
+
+export default () => {
+    return new Vuex.Store({modules})
 }
-
-export default createStore

@@ -4,9 +4,9 @@ export default function ({ $axios, redirect, store }) {
 
         config.baseURL = process.env.baseUrl;
 
-        if (store.state.token)
+        if (store.state.user.token)
         {
-            config.headers.common['Authorization'] = `Bearer ${store.state.token}`;
+            config.headers.common['Authorization'] = `Bearer ${store.state.user.token}`;
         }
     });
 

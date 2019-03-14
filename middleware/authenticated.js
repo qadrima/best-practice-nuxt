@@ -1,9 +1,9 @@
 export default function ({ store, redirect }) {
-    if(!store.state.token)
+    if(!store.state.user.token)
     {
         return redirect('/login');
     }
-    else if(store.state.token && !store.state.auth)
+    else if(store.state.user.token && !store.state.user.auth)
     {
         store.dispatch('fetchAuth');
     }

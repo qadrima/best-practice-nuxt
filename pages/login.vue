@@ -42,7 +42,7 @@ export default{
     methods: {
         submitLogin(){
             this.$store.dispatch('login', this.login).then(response => {
-                if(response.status) this.$router.back();
+                if(response.status) this.$router.push('/');
             }, error => {
                 console.error(error);
             });

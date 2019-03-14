@@ -3,8 +3,10 @@
         username
         <span v-if="user">{{ user.username }}</span>
         <br>
-        <span @click="fetchUserBirthday()">fetchUserBirthday</span>
-        <span @click="fetchUser()">fetchUser</span>
+
+        <v-btn @click="fetchUserBirthday">fetchUserBirthday</v-btn>
+        <v-btn @click="fetchUser">fetchUser</v-btn>
+        
     </div>
 </template>
 
