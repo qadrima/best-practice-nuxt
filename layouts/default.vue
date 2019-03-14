@@ -49,6 +49,12 @@
 <script>
 export default {
     middleware: 'authenticated',
+    mounted() {
+        console.log('===========>mounted');
+    },
+    beforeCreate() {
+        console.log('===========>beforeCreate');
+    },
     data() {
         return {
             clipped : false,
@@ -61,8 +67,8 @@ export default {
                 },
                 {
                     icon    : 'bubble_chart',
-                    title   : 'Inspire',
-                    to      : '/inspire'
+                    title   : 'Profile',
+                    to      : '/profile/akbar'
                 }
             ],
             miniVariant : false,

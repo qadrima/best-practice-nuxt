@@ -3,6 +3,15 @@ const pkg = require('./package')
 
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
+const env = {
+    development : {
+        baseUrl : 'http://localhost:8000',
+    },
+    production : {
+        baseUrl : 'https://production.com',
+    }
+}
+
 module.exports = {
     mode: 'spa',
 
@@ -54,6 +63,9 @@ module.exports = {
     modules: [
         '@nuxtjs/axios',
     ],
+
+    // const env
+    env: env[process.env.NODE_ENV],
 
     /*
     ** Build configuration

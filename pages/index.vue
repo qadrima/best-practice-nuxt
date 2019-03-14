@@ -23,17 +23,12 @@ import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
 export default {
-    fetch ({ params, redirect }) {
-        // console.log('----------------');
-        // console.log(params);
-        // console.log(redirect);
-    },
     components: {
         Logo,
         VuetifyLogo
     },
     methods: {
-        
+
     }
 }
 </script>
